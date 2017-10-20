@@ -1,0 +1,36 @@
+Alvin Thai, athai005, 861103107
+
+Lab 1 Report:
+
+1. The number of thread blocks being used can be calculated using the formula:
+ceiling of(Total number of threads/number of threads per block)
+
+In the case of this program's default vector size (1000), with a block size of
+256 threads:
+ceiling(1000 threads / 256 threads per block) = ceiling(3.90625) = 4
+blocks.
+
+The number of thread blocks used are subject to change based on the number of
+threads total and the number of threads per block.
+
+
+2. Not all thread blocks are full.
+
+In the case of this program's default vector size (1000), with a block size of
+256 threads:
+Only 3 of the 4 blocks used will be full. The 4th block will only be using
+(1000 - (3*256)) = 232 threads out of 256 available.
+
+Whether or not all thread blocks are full depend on the total number of
+threads and the number of threads per block. If you had 512 threads, you would
+only need 2 blocks of 256 threads each, and both blocks would be full.
+
+
+3. Alternatively, the basic vector add program can also be modified to perform
+the same operations for 3D vectors, or multiple vectors. These would likely
+only require changes to the addition happening in the __global__ add function,
+and to how threads are acquired/managed in the basicVecAdd function.
+
+Performance-wise, the only improvement I can think of making would be
+placing the GPU an CPU on the same chip. This would remove the need to
+transfer data between host and device, and thus speed up calculations.
