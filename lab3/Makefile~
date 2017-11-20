@@ -1,8 +1,8 @@
 
 NVCC        = nvcc
-NVCC_FLAGS  = -O3 -I/usr/local/cuda-8.0/include #--ptxas-options="-v" #-lineinfo 
-LD_FLAGS    = -lcudart -L/usr/local/cuda-8.0/lib64 #--ptxas-options="-v" #-lineinfo
-EXE	        = sgemm-tiled
+NVCC_FLAGS  = -O3 -I/usr/local/cuda/include -arch=sm_20
+LD_FLAGS    = -lcudart -L/usr/local/cuda/lib64
+EXE	        = histogram
 OBJ	        = main.o support.o
 
 default: $(EXE)

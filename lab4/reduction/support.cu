@@ -1,4 +1,3 @@
-
 /******************************************************************************
  *cr
  *cr            (C) Copyright 2010 The Board of Trustees of the
@@ -7,28 +6,41 @@
  *cr
  ******************************************************************************/
 
-#include <stdint.h>
 #include <stdlib.h>
 #include <stdio.h>
 
 #include "support.h"
 
-void verify(float *A, float *B, float *C, unsigned int n) {
+void initVector(float **vec_h, unsigned size)
+{
+    *vec_h = (float*)malloc(size*sizeof(float));
 
-  const float relativeTolerance = 1e-2;
+    if(*vec_h == NULL) {
+        FATAL("Unable to allocate host");
+    }
 
-  for(int i = 0; i < n; ++i) {
-      float sum = A[i]+B[i];
-//      printf("\t%f/%f",sum,C[i]);
-      float relativeError = (sum - C[i])/sum;
-      if (relativeError > relativeTolerance
-        || relativeError < -relativeTolerance) {
-        printf("\nTEST FAILED\n\n");
-        exit(0);
-      }
-    
+    for (unsigned int i=0; i < size; i++) {
+        (*vec_h)[i] = (rand()%100)/100.00;
+    }
+
+}
+
+
+void verify(float* input, unsigned num_elements, float result) {
+
+  const float relativeTolerance = 2e-5;
+
+  float sum = 0.0f;
+  for(int i = 0; i < num_elements; ++i) {
+    sum += input[i];
   }
-  printf("\nTEST PASSED\n\n");
+  float relativeError = (sum - result)/sum;
+  if (relativeError > relativeTolerance
+    || relativeError < -relativeTolerance) {
+    printf("TEST FAILED, cpu = %0.3f, gpu = %0.3f\n\n", sum, result);
+    exit(0);
+  }
+  printf("TEST PASSED\n\n");
 
 }
 
@@ -44,3 +56,4 @@ float elapsedTime(Timer timer) {
     return ((float) ((timer.endTime.tv_sec - timer.startTime.tv_sec) \
                 + (timer.endTime.tv_usec - timer.startTime.tv_usec)/1.0e6));
 }
+

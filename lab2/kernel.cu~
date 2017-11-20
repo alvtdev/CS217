@@ -42,7 +42,7 @@ __global__ void mysgemm(int m, int n, int k, const float *A, const float *B, flo
 		float pValue = 0.0;
 
 		//compute the P element by looping over M and N matrices
-		for (int p = 0; p < ((k-1)/TILE_SIZE+1) ; p++) {
+		for (int p = 0; p < ((n-1)/TILE_SIZE+1) ; p++) {
 			//load A and B tiles into shared memory
 			//loads 0 into memory if out of bounds
 			if(row < m && (p*TILE_SIZE + tx) < k) {
@@ -52,7 +52,7 @@ __global__ void mysgemm(int m, int n, int k, const float *A, const float *B, flo
 				ds_A[ty][tx] = 0.0;
 			}
 			if (col < n && (p*TILE_SIZE + ty) < k) {
-				ds_B[ty][tx] = B[(p*TILE_SIZE+ty)*k + col];
+				ds_B[ty][tx] = B[(p*TILE_SIZE+ty)*n + col];
 			}
 			else {
 				ds_B[ty][tx] = 0.0;

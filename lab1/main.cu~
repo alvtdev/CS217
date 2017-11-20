@@ -32,7 +32,7 @@ int main (int argc, char *argv[])
     dim3 dim_grid, dim_block;
 
     if (argc == 1) {
-        VecSize = 1000000;
+        VecSize = 1000;
 
       } else if (argc == 2) {
       VecSize = atoi(argv[1]);   

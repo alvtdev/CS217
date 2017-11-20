@@ -1,0 +1,11 @@
+Alvin Thai, 861103107
+
+CS217 Lab 3 Report
+
+1.
+
+2. Both my current (privatized) implementation and previous (naive)
+implementation fails when n (the number of bins) exceeds 12288. At the time of
+writing this report, the cause for this is unknown and I can't think of an
+implementation that overcomes this. (The answer to this question, of course, 
+will be updated as soon as I can think of one). 
